@@ -3,51 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Wedding Invite</title>
+  <title>Wedding Invite Video</title>
   <style>
-    body {
+    html, body {
+      margin: 0; padding: 0; height: 100%;
       background: black;
-      color: white;
+      overflow: hidden;
       font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
     }
     video {
-      max-width: 90vw;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
-    }
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 1;
     }
     .rsvp-button {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
       background-color: #A0522D;
       color: white;
-      padding: 14px 28px;
-      border-radius: 10px;
-      font-size: 1.2rem;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.5rem;
       font-weight: bold;
-      text-decoration: none;
-      display: inline-block;
       cursor: pointer;
+      box-shadow: 0 0 15px rgba(160, 82, 45, 0.7);
+      text-decoration: none;
+      user-select: none;
+      transition: background-color 0.3s ease;
     }
-    .rsvp-button:hover {
+    .rsvp-button:hover,
+    .rsvp-button:focus {
       background-color: #8B4513;
+      outline: none;
     }
   </style>
 </head>
 <body>
   <video autoplay muted loop playsinline>
-    <source src="your-video.mp4" type="video/mp4" />
+    <source src="your-canva-video.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
-  <h1>Rushan & Maryam</h1>
-  <p>November 28th, 2025 — 3:00 PM<br>White's Ferry Manor, Leesburg, VA</p>
+
   <a href="https://withjoy.com/maryam-and-rushan" target="_blank" rel="noopener noreferrer" class="rsvp-button">
     RSVP Now
   </a>
