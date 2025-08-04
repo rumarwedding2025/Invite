@@ -13,14 +13,25 @@
       height: 100%;
     }
 
-    video {
-      position: absolute;
-      top: 0;
-      left: 0;
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .video-wrapper {
+      position: relative;
       width: 100vw;
       height: 100vh;
-      object-fit: cover;
-      z-index: -1;
+      overflow: hidden;
+    }
+
+    video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 100%;
+      transform: translate(-50%, -50%);
     }
 
     .rsvp-container {
@@ -28,6 +39,7 @@
       bottom: 40px;
       width: 100%;
       text-align: center;
+      z-index: 1;
     }
 
     .rsvp-button {
@@ -48,19 +60,21 @@
 </head>
 
 <body>
-  <video autoplay muted playsinline loop>
-    <source src="wedding.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
+  <div class="video-wrapper">
+    <video autoplay muted playsinline loop>
+      <source src="wedding.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
 
-  <div class="rsvp-container">
-    <a 
-      href="https://withjoy.com/maryam-and-rushan" 
-      class="rsvp-button" 
-      target="_blank"
-    >
-      RSVP Now
-    </a>
+    <div class="rsvp-container">
+      <a 
+        href="https://withjoy.com/maryam-and-rushan" 
+        class="rsvp-button" 
+        target="_blank"
+      >
+        RSVP Now
+      </a>
+    </div>
   </div>
 </body>
 </html>
