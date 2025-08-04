@@ -7,42 +7,62 @@
   <style>
     body {
       margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
       background-color: #000;
-      overflow: hidden;
+      color: #fff;
+      overflow-x: hidden;
     }
 
-    video {
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
+    .background-video {
+      width: 100%;
+      height: auto;
       display: block;
+      object-fit: contain;
     }
 
-    .rsvp-button {
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 12px 24px;
-      background-color: #A0522D;
-      color: white;
-      font-size: 1em;
-      border: none;
-      border-radius: 8px;
-      text-decoration: none;
-      z-index: 1;
+    .details {
+      text-align: center;
+      padding: 20px;
     }
 
-    .rsvp-button:hover {
-      background-color: #8B4513;
+    .details h1,
+    .details p {
+      margin: 10px 0;
+    }
+
+    .rsvp-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #fff;
+      text-decoration: underline;
+      font-size: 1.1em;
+    }
+
+    .rsvp-link:hover {
+      color: #ccc;
     }
   </style>
 </head>
 <body>
-  <video autoplay muted playsinline loop preload="auto">
-    <source src="wedding.mp4" type="video/mp4" />
+  <!-- Replace 'wedding-video.mp4' with your actual file name -->
+  <video 
+    class="background-video" 
+    autoplay 
+    muted 
+    playsinline 
+    loop 
+    preload="auto"
+  >
+    <source src="wedding-video.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
-  <a href="https://your-rsvp-link.com" class="rsvp-button">RSVP Now</a>
+
+  <div class="details">
+    <h1>Rushan & Maryam</h1>
+    <p>November 28th, 2025 — 3:00 PM</p>
+    <p>White's Ferry Manor</p>
+    <p>42476 Whites Ferry Rd, Leesburg, VA 20176</p>
+    <a href="https://www.zola.com/wedding/maryamandrushan/rsvp" class="rsvp-link" target="_blank">RSVP Here</a>
+  </div>
 </body>
 </html>
