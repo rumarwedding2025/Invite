@@ -14,10 +14,17 @@
     }
 
     .background-video {
-      width: 100%;
-      height: auto;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
       display: block;
-      object-fit: contain;
+    }
+
+    @media screen and (max-width: 480px) {
+      .background-video {
+        height: 100vh;
+        object-fit: cover;
+      }
     }
 
     .details {
@@ -44,7 +51,6 @@
   </style>
 </head>
 <body>
-  <!-- Replace 'wedding-video.mp4' with your actual file name -->
   <video 
     class="background-video" 
     autoplay 
@@ -61,8 +67,5 @@
     <h1>Rushan & Maryam</h1>
     <p>November 28th, 2025 — 3:00 PM</p>
     <p>White's Ferry Manor</p>
-    <p>42476 Whites Ferry Rd, Leesburg, VA 20176</p>
-    <a href="https://www.zola.com/wedding/maryamandrushan/rsvp" class="rsvp-link" target="_blank">RSVP Here</a>
-  </div>
-</body>
-</html>
+    <p>42476
+      
