@@ -20,13 +20,6 @@
       display: block;
     }
 
-    @media screen and (max-width: 480px) {
-      .background-video {
-        height: 100vh;
-        object-fit: cover;
-      }
-    }
-
     .details {
       text-align: center;
       padding: 20px;
@@ -43,6 +36,7 @@
       color: #fff;
       text-decoration: underline;
       font-size: 1.1em;
+      cursor: pointer;
     }
 
     .rsvp-link:hover {
@@ -53,11 +47,11 @@
 <body>
   <video 
     class="background-video" 
-    autoplay 
     muted 
     playsinline 
     loop 
     preload="auto"
+    controls
   >
     <source src="wedding-video.mp4" type="video/mp4" />
     Your browser does not support the video tag.
@@ -67,5 +61,8 @@
     <h1>Rushan & Maryam</h1>
     <p>November 28th, 2025 — 3:00 PM</p>
     <p>White's Ferry Manor</p>
-    <p>42476
-      
+    <p>42476 Whites Ferry Rd, Leesburg, VA 20176</p>
+    <a href="https://withjoy.com/maryam-and-rushan" class="rsvp-link" target="_blank">RSVP Here</a>
+  </div>
+</body>
+</html>
