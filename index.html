@@ -3,52 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rushan & Maryam Wedding Invite</title>
+  <title>Wedding Invite</title>
   <style>
-    /* Reset & basic styles */
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: black;
-      color: white;
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      overflow: hidden;
       font-family: 'Arial', sans-serif;
+    }
+    #video-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    .overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      text-align: center;
-    }
-
-    video {
-      max-width: 90vw;
-      max-height: 60vh;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.2);
-      margin-bottom: 30px;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin: 0 0 10px 0;
-    }
-
-    p {
-      font-size: 1.2rem;
-      margin: 0 0 40px 0;
-    }
-
-    .rsvp-button {
-      display: inline-block;
-      background-color: #A0522D;
-      padding: 14px 30px;
-      border-radius: 10px;
+      align-items: center;
       color: white;
-      font-weight: bold;
-      font-size: 1.2rem;
-      text-decoration: none;
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.35); /* optional dark overlay */
+    }
+    .overlay h1 {
+      font-size: 4vw;
+      margin: 0;
+      font-weight: 700;
+      text-shadow: 0 0 8px rgba(0,0,0,0.7);
+    }
+    .overlay p {
+      font-size: 2vw;
+      margin: 15px 0 40px 0;
+      text-shadow: 0 0 6px rgba(0,0,0,0.6);
+    }
+    .rsvp-button {
+      font-size: 1.8vw;
+      padding: 14px 40px;
+      border: none;
+      border-radius: 10px;
+      background-color: #A0522D;
+      color: white;
+      font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(160, 82, 45, 0.5);
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(160,82,45,0.8);
       transition: background-color 0.3s ease;
       user-select: none;
     }
@@ -57,9 +58,30 @@
       background-color: #8B4513;
       outline: none;
     }
+    @media (max-width: 600px) {
+      .overlay h1 {
+        font-size: 8vw;
+      }
+      .overlay p {
+        font-size: 4vw;
+      }
+      .rsvp-button {
+        font-size: 4vw;
+        padding: 12px 30px;
+      }
+    }
   </style>
 </head>
 <body>
+  <video id="video-bg" autoplay muted loop playsinline>
+    <source src="your-canva-video.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
 
-  <!-- Video -->
-  <video aut
+  <div class="overlay">
+    <h1>Rushan & Maryam</h1>
+    <p>November 28th, 2025 — 3:00 PM<br>White's Ferry Manor, Leesburg, VA</p>
+    <a href="https://withjoy.com/maryam-and-rushan" target="_blank" rel="noopener noreferrer" class="rsvp-button">RSVP Now</a>
+  </div>
+</body>
+</html>
