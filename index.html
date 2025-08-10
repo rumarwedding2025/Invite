@@ -10,9 +10,9 @@
       height: 100%;
       margin: 0;
       background: black;
-      overflow: hidden;
       font-family: 'Dancing Script', cursive;
       color: white;
+      overflow: hidden; /* default no scroll */
     }
     video {
       position: fixed;
@@ -79,9 +79,8 @@
     const unmuteBtn = document.getElementById('unmuteBtn');
     const rsvpBtn = document.getElementById('rsvpBtn');
 
-    // Try to play muted video on load
+    // Autoplay attempt with fallback for user interaction
     video.play().catch(() => {
-      // Autoplay failed, wait for user interaction
       const playOnUserGesture = () => {
         video.play();
         window.removeEventListener('touchstart', playOnUserGesture);
@@ -97,6 +96,16 @@
       unmuteBtn.style.display = 'none';
       rsvpBtn.style.display = 'inline';
     });
+
+    // Detect desktop/laptop devices to enable scroll
+    function isDesktop() {
+      return !/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    if (isDesktop()) {
+      document.documentElement.style.overflowY = 'auto';
+      document.body.style.overflowY = 'auto';
+    }
   </script>
 </body>
 </html>
