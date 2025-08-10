@@ -7,33 +7,35 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
   <style>
     html, body {
-      margin: 0; padding: 0; height: 100%;
+      margin: 0;
+      padding: 0;
+      height: 100%;
       background: black;
       font-family: 'Dancing Script', cursive;
       color: white;
       overflow-x: hidden;
-      overflow-y: hidden; /* default no scroll */
+      overflow-y: hidden; /* no scroll by default */
     }
 
-    /* Enable scroll on desktops */
+    /* Scroll content container — forces scroll on desktop */
+    #scrollContent {
+      display: block !important;
+      height: 150vh;
+      background: transparent;
+    }
+
+    /* Enable vertical scroll on desktop */
     @media (min-width: 768px) {
       html, body {
         overflow-y: auto;
       }
-      #scrollContent {
-        display: block;
-        height: 150vh; /* tall container to enable scroll */
-      }
-    }
-
-    #scrollContent {
-      display: none; /* hidden on mobile */
     }
 
     video {
       position: fixed;
       top: 0; left: 0;
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       z-index: 0;
     }
@@ -52,7 +54,7 @@
     }
 
     button, a {
-      font-family: inherit;
+      font-family: 'Dancing Script', cursive;
       font-size: 1.8em;
       color: white;
       background: transparent;
@@ -85,7 +87,6 @@
   </style>
 </head>
 <body>
-
   <video autoplay muted playsinline loop preload="auto" id="weddingVideo">
     <source src="wedding_v2.mp4?v=3" type="video/mp4" />
     Your browser does not support the video tag.
@@ -94,7 +95,7 @@
   <div id="scrollContent"></div>
 
   <div class="bottom-bar">
-    <button id="unmuteBtn">Click Here</button>
+    <button id="unmuteBtn">Click here</button>
     <a id="rsvpBtn" href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer">RSVP</a>
   </div>
 
@@ -110,7 +111,7 @@
       rsvpBtn.style.display = 'inline';
     });
 
-    // Autoplay fallback for mobile
+    // Autoplay fallback for mobile devices
     video.play().catch(() => {
       const playOnUserGesture = () => {
         video.play();
