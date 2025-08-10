@@ -12,27 +12,22 @@
       font-family: 'Dancing Script', cursive;
       color: white;
       overflow-x: hidden;
-      overflow-y: hidden; /* no scroll on mobile */
+      overflow-y: hidden; /* default no scroll */
     }
 
-    /* Scroll enabled on desktop (width >= 768px) */
+    /* Enable scroll on desktops */
     @media (min-width: 768px) {
       html, body {
         overflow-y: auto;
       }
       #scrollContent {
         display: block;
-        height: 200vh; /* enough height for scroll */
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%;
-        background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.5)); /* subtle visual hint */
-        z-index: 0;
+        height: 150vh; /* tall container to enable scroll */
       }
     }
 
     #scrollContent {
-      display: none;
+      display: none; /* hidden on mobile */
     }
 
     video {
@@ -40,7 +35,7 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      z-index: 1;
+      z-index: 0;
     }
 
     .bottom-bar {
@@ -57,7 +52,7 @@
     }
 
     button, a {
-      font-family: 'Dancing Script', cursive;
+      font-family: inherit;
       font-size: 1.8em;
       color: white;
       background: transparent;
@@ -90,6 +85,7 @@
   </style>
 </head>
 <body>
+
   <video autoplay muted playsinline loop preload="auto" id="weddingVideo">
     <source src="wedding_v2.mp4?v=3" type="video/mp4" />
     Your browser does not support the video tag.
@@ -98,7 +94,7 @@
   <div id="scrollContent"></div>
 
   <div class="bottom-bar">
-    <button id="unmuteBtn">Click Here</button>
+    <button id="unmuteBtn">Click here</button>
     <a id="rsvpBtn" href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer">RSVP</a>
   </div>
 
@@ -107,6 +103,14 @@
     const unmuteBtn = document.getElementById('unmuteBtn');
     const rsvpBtn = document.getElementById('rsvpBtn');
 
+    unmuteBtn.addEventListener('click', () => {
+      video.muted = false;
+      video.play();
+      unmuteBtn.style.display = 'none';
+      rsvpBtn.style.display = 'inline';
+    });
+
+    // Autoplay fallback for mobile
     video.play().catch(() => {
       const playOnUserGesture = () => {
         video.play();
@@ -115,13 +119,6 @@
       };
       window.addEventListener('touchstart', playOnUserGesture, { once: true });
       window.addEventListener('click', playOnUserGesture, { once: true });
-    });
-
-    unmuteBtn.addEventListener('click', () => {
-      video.muted = false;
-      video.play();
-      unmuteBtn.style.display = 'none';
-      rsvpBtn.style.display = 'inline';
     });
   </script>
 </body>
