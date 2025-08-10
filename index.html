@@ -12,9 +12,9 @@
       background: black;
       font-family: 'Dancing Script', cursive;
       color: white;
-      overflow-x: hidden;
+      overflow: hidden;
+      height: 100%;
     }
-
     video {
       width: 100vw;
       height: 100vh;
@@ -23,33 +23,20 @@
       top: 0; left: 0;
       z-index: 0;
     }
-
-    @media (min-width: 768px) {
-      video {
-        position: relative;
-        width: 100%;
-        height: auto;
-      }
-      body {
-        overflow-y: auto;
-      }
-    }
-
     .bottom-bar {
       position: fixed;
       bottom: 0; left: 0;
       width: 100%;
       height: 60px;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.6);
       display: flex;
       justify-content: center;
       align-items: center;
       padding-bottom: env(safe-area-inset-bottom);
       z-index: 10;
     }
-
     button, a {
-      font-family: inherit;
+      font-family: 'Dancing Script', cursive;
       font-size: 1.8em;
       color: white;
       background: transparent;
@@ -58,27 +45,28 @@
       padding: 8px 20px;
       user-select: none;
       text-decoration: none;
-      position: relative;
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
     }
-
     button:hover, button:focus,
     a:hover, a:focus {
       color: #ccc;
       outline: none;
       text-decoration: none;
     }
-
     #rsvpBtn {
       display: none;
       z-index: 9;
     }
-
     #unmuteBtn {
       z-index: 11;
     }
   </style>
 </head>
 <body>
+
   <video autoplay muted playsinline loop preload="auto" id="weddingVideo">
     <source src="wedding_v2.mp4?v=3" type="video/mp4" />
     Your browser does not support the video tag.
@@ -90,6 +78,16 @@
   </div>
 
   <script>
+    // Set video height on mobile to prevent cut-off
+    function setVideoHeight() {
+      const vh = window.innerHeight;
+      const video = document.getElementById('weddingVideo');
+      video.style.height = `${vh}px`;
+    }
+    window.addEventListener('resize', setVideoHeight);
+    window.addEventListener('orientationchange', setVideoHeight);
+    setVideoHeight();
+
     const video = document.getElementById('weddingVideo');
     const unmuteBtn = document.getElementById('unmuteBtn');
     const rsvpBtn = document.getElementById('rsvpBtn');
@@ -101,7 +99,11 @@
       rsvpBtn.style.display = 'inline';
     });
 
-    video.play().catch(() => {
+    // Attempt to autoplay
+    video.play().then(() => {
+      console.log('Autoplay started!');
+    }).catch(() => {
+      console.log('Autoplay failed, waiting for user gesture...');
       const playOnUserGesture = () => {
         video.play();
         window.removeEventListener('touchstart', playOnUserGesture);
@@ -111,5 +113,6 @@
       window.addEventListener('click', playOnUserGesture, { once: true });
     });
   </script>
+
 </body>
 </html>
