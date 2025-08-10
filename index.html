@@ -15,16 +15,18 @@
       overflow-y: hidden; /* no scroll on mobile */
     }
 
-    /* Scroll enabled on desktop */
+    /* Scroll enabled on desktop (width >= 768px) */
     @media (min-width: 768px) {
       html, body {
         overflow-y: auto;
       }
       #scrollContent {
         display: block;
-        height: 200vh; /* tall enough to scroll */
-        background: transparent; /* ensures it can receive scroll */
-        position: relative;
+        height: 200vh; /* enough height for scroll */
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.5)); /* subtle visual hint */
         z-index: 0;
       }
     }
