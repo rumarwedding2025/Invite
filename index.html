@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wedding Invite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet" />
   <style>
     html, body {
       height: 100%;
@@ -11,11 +12,9 @@
       padding: 0;
       background: black;
       overflow: hidden;
-      padding-bottom: env(safe-area-inset-bottom);
       font-family: Arial, sans-serif;
       color: white;
     }
-
     video {
       position: fixed;
       top: 0;
@@ -23,60 +22,78 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      -webkit-transform: translateZ(0);
       z-index: 0;
     }
-
     .bottom-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
+      height: 60px; /* height enough for button */
       background: rgba(0, 0, 0, 0.6);
-      padding: 15px 0;
-      text-align: center;
-      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       box-sizing: border-box;
-      padding-bottom: calc(env(safe-area-inset-bottom) + 15px);
+      padding-bottom: env(safe-area-inset-bottom);
+      z-index: 10;
     }
-
-    .bottom-bar a {
+    button, a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5em;
       color: white;
-      font-size: 1.2em;
-      text-decoration: underline;
+      background: transparent;
+      border: none;
       cursor: pointer;
+      text-decoration: underline;
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 20px;
+      user-select: none;
     }
-
-    .bottom-bar a:hover,
-    .bottom-bar a:focus {
+    button:hover, button:focus,
+    a:hover, a:focus {
       color: #ccc;
       outline: none;
+      text-decoration: none;
+    }
+    #rsvpBtn {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none; /* hidden initially */
+      z-index: 9;
+    }
+    #unmuteBtn {
+      z-index: 11; /* on top */
     }
   </style>
 </head>
 <body>
-  <video autoplay muted playsinline loop preload="auto" muted>
+  <video autoplay muted playsinline loop preload="auto" id="weddingVideo">
     <source src="wedding_v2.mp4?v=3" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
 
   <div class="bottom-bar">
-    <a href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer">
-      RSVP
-    </a>
+    <button id="unmuteBtn">Click here</button>
+    <a id="rsvpBtn" href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer">RSVP</a>
   </div>
 
   <script>
-    const video = document.querySelector('video');
-    function playVideo() {
-      video.play().catch(() => {
-        // Autoplay failed, waiting for user gesture
-      });
-      document.body.removeEventListener('touchstart', playVideo);
-      document.body.removeEventListener('click', playVideo);
-    }
-    document.body.addEventListener('touchstart', playVideo, { once: true });
-    document.body.addEventListener('click', playVideo, { once: true });
+    const video = document.getElementById('weddingVideo');
+    const unmuteBtn = document.getElementById('unmuteBtn');
+    const rsvpBtn = document.getElementById('rsvpBtn');
+
+    unmuteBtn.addEventListener('click', () => {
+      video.muted = false;
+      video.play();
+      unmuteBtn.style.display = 'none'; // hide unmute button
+      rsvpBtn.style.display = 'inline';  // show RSVP button
+    });
   </script>
 </body>
 </html>
