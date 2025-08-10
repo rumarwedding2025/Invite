@@ -14,20 +14,23 @@
       font-family: 'Dancing Script', cursive;
       color: white;
       overflow-x: hidden;
-      overflow-y: hidden; /* no scroll by default */
+      /* no overflow-y here so mobile won't scroll */
     }
 
-    /* Scroll content container — forces scroll on desktop */
     #scrollContent {
-      display: block !important;
-      height: 150vh;
-      background: transparent;
+      display: none;
     }
 
-    /* Enable vertical scroll on desktop */
+    /* Scroll on desktop only */
     @media (min-width: 768px) {
       html, body {
         overflow-y: auto;
+        height: auto;
+      }
+      #scrollContent {
+        display: block;
+        height: 150vh; /* tall enough to enable scroll */
+        background: transparent;
       }
     }
 
@@ -54,7 +57,7 @@
     }
 
     button, a {
-      font-family: 'Dancing Script', cursive;
+      font-family: inherit;
       font-size: 1.8em;
       color: white;
       background: transparent;
@@ -95,7 +98,7 @@
   <div id="scrollContent"></div>
 
   <div class="bottom-bar">
-    <button id="unmuteBtn">Click ere</button>
+    <button id="unmuteBtn">Click here</button>
     <a id="rsvpBtn" href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer">RSVP</a>
   </div>
 
