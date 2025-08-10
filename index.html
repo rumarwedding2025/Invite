@@ -7,9 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
   <style>
     html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
+      margin: 0; padding: 0; height: 100%;
       background: black;
       font-family: 'Dancing Script', cursive;
       color: white;
@@ -17,14 +15,17 @@
       overflow-y: hidden; /* no scroll on mobile */
     }
 
-    /* Enable scroll on desktop */
+    /* Scroll enabled on desktop */
     @media (min-width: 768px) {
       html, body {
         overflow-y: auto;
       }
       #scrollContent {
         display: block;
-        height: 150vh; /* scroll height */
+        height: 200vh; /* tall enough to scroll */
+        background: transparent; /* ensures it can receive scroll */
+        position: relative;
+        z-index: 0;
       }
     }
 
@@ -35,10 +36,9 @@
     video {
       position: fixed;
       top: 0; left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       object-fit: cover;
-      z-index: 0;
+      z-index: 1;
     }
 
     .bottom-bar {
@@ -88,7 +88,7 @@
   </style>
 </head>
 <body>
-  <video autoplay muted playsinline loop preload="auto" id="weddingVideo" webkit-playsinline>
+  <video autoplay muted playsinline loop preload="auto" id="weddingVideo">
     <source src="wedding_v2.mp4?v=3" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
@@ -105,9 +105,7 @@
     const unmuteBtn = document.getElementById('unmuteBtn');
     const rsvpBtn = document.getElementById('rsvpBtn');
 
-    // Try to play video on load
     video.play().catch(() => {
-      // Autoplay blocked, wait for user interaction
       const playOnUserGesture = () => {
         video.play();
         window.removeEventListener('touchstart', playOnUserGesture);
