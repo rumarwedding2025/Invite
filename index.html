@@ -14,7 +14,7 @@
       font-family: 'Dancing Script', cursive;
       color: white;
       overflow-x: hidden;
-      overflow-y: hidden; /* no scroll by default */
+      overflow-y: hidden; /* no scroll on mobile */
     }
 
     /* Enable scroll on desktop */
@@ -24,7 +24,7 @@
       }
       #scrollContent {
         display: block;
-        height: 150vh; /* height for scrolling */
+        height: 150vh; /* scroll height */
       }
     }
 
@@ -55,7 +55,7 @@
     }
 
     button, a {
-      font-family: inherit;
+      font-family: 'Dancing Script', cursive;
       font-size: 1.8em;
       color: white;
       background: transparent;
@@ -88,7 +88,7 @@
   </style>
 </head>
 <body>
-  <video autoplay muted playsinline loop preload="auto" id="weddingVideo">
+  <video autoplay muted playsinline loop preload="auto" id="weddingVideo" webkit-playsinline>
     <source src="wedding_v2.mp4?v=3" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
@@ -96,7 +96,7 @@
   <div id="scrollContent"></div>
 
   <div class="bottom-bar">
-    <button id="unmuteBtn">Click Here</button>
+    <button id="unmuteBtn">Click here</button>
     <a id="rsvpBtn" href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer">RSVP</a>
   </div>
 
@@ -105,17 +105,9 @@
     const unmuteBtn = document.getElementById('unmuteBtn');
     const rsvpBtn = document.getElementById('rsvpBtn');
 
-    // Unmute button logic
-    unmuteBtn.addEventListener('click', () => {
-      video.muted = false;
-      video.play();
-      unmuteBtn.style.display = 'none';
-      rsvpBtn.style.display = 'inline';
-    });
-
-    // Try to autoplay immediately
+    // Try to play video on load
     video.play().catch(() => {
-      // If autoplay fails (common on iPhones), wait for user interaction
+      // Autoplay blocked, wait for user interaction
       const playOnUserGesture = () => {
         video.play();
         window.removeEventListener('touchstart', playOnUserGesture);
@@ -123,6 +115,13 @@
       };
       window.addEventListener('touchstart', playOnUserGesture, { once: true });
       window.addEventListener('click', playOnUserGesture, { once: true });
+    });
+
+    unmuteBtn.addEventListener('click', () => {
+      video.muted = false;
+      video.play();
+      unmuteBtn.style.display = 'none';
+      rsvpBtn.style.display = 'inline';
     });
   </script>
 </body>
