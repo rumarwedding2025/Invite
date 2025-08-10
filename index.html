@@ -7,34 +7,55 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
   <style>
     html, body {
-      height: 100%;
       margin: 0;
+      padding: 0;
+      height: 100%;
       background: black;
       font-family: 'Dancing Script', cursive;
       color: white;
-      overflow: hidden; /* default no scroll */
+      overflow-x: hidden;
+      overflow-y: hidden; /* no scroll by default */
     }
+
+    /* Enable scroll on desktop */
+    @media (min-width: 768px) {
+      html, body {
+        overflow-y: auto;
+      }
+      #scrollContent {
+        display: block;
+        height: 150vh; /* height for scrolling */
+      }
+    }
+
+    #scrollContent {
+      display: none;
+    }
+
     video {
       position: fixed;
       top: 0; left: 0;
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       z-index: 0;
     }
+
     .bottom-bar {
       position: fixed;
       bottom: 0; left: 0;
       width: 100%;
       height: 60px;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.6);
       display: flex;
       justify-content: center;
       align-items: center;
       padding-bottom: env(safe-area-inset-bottom);
       z-index: 10;
     }
+
     button, a {
-      font-family: 'Dancing Script', cursive;
+      font-family: inherit;
       font-size: 1.8em;
       color: white;
       background: transparent;
@@ -48,16 +69,19 @@
       left: 50%;
       transform: translateX(-50%);
     }
+
     button:hover, button:focus,
     a:hover, a:focus {
       color: #ccc;
       outline: none;
       text-decoration: none;
     }
+
     #rsvpBtn {
       display: none;
       z-index: 9;
     }
+
     #unmuteBtn {
       z-index: 11;
     }
@@ -69,6 +93,8 @@
     Your browser does not support the video tag.
   </video>
 
+  <div id="scrollContent"></div>
+
   <div class="bottom-bar">
     <button id="unmuteBtn">Click Here</button>
     <a id="rsvpBtn" href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer">RSVP</a>
@@ -79,8 +105,17 @@
     const unmuteBtn = document.getElementById('unmuteBtn');
     const rsvpBtn = document.getElementById('rsvpBtn');
 
-    // Autoplay attempt with fallback for user interaction
+    // Unmute button logic
+    unmuteBtn.addEventListener('click', () => {
+      video.muted = false;
+      video.play();
+      unmuteBtn.style.display = 'none';
+      rsvpBtn.style.display = 'inline';
+    });
+
+    // Try to autoplay immediately
     video.play().catch(() => {
+      // If autoplay fails (common on iPhones), wait for user interaction
       const playOnUserGesture = () => {
         video.play();
         window.removeEventListener('touchstart', playOnUserGesture);
@@ -89,23 +124,6 @@
       window.addEventListener('touchstart', playOnUserGesture, { once: true });
       window.addEventListener('click', playOnUserGesture, { once: true });
     });
-
-    unmuteBtn.addEventListener('click', () => {
-      video.muted = false;
-      video.play();
-      unmuteBtn.style.display = 'none';
-      rsvpBtn.style.display = 'inline';
-    });
-
-    // Detect desktop/laptop devices to enable scroll
-    function isDesktop() {
-      return !/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-
-    if (isDesktop()) {
-      document.documentElement.style.overflowY = 'auto';
-      document.body.style.overflowY = 'auto';
-    }
   </script>
 </body>
 </html>
