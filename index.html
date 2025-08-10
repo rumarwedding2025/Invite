@@ -6,7 +6,10 @@
   <title>Wedding Invite</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
   <style>
-    html, body {
+    /* Fade in the whole page on load */
+    body {
+      opacity: 0;
+      animation: fadeInPage 1.8s ease-in-out forwards;
       margin: 0;
       padding: 0;
       background: black;
@@ -14,7 +17,16 @@
       color: white;
       overflow: hidden;
       height: 100%;
+      position: relative;
     }
+
+    @keyframes fadeInPage {
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Fullscreen video */
     video {
       width: 100vw;
       height: 100vh;
@@ -23,18 +35,39 @@
       top: 0; left: 0;
       z-index: 0;
     }
+
+    /* Gradient overlay to help text pop */
+    #videoOverlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none; /* So clicks pass through */
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.6) 10%,
+        rgba(0, 0, 0, 0) 60%,
+        rgba(0, 0, 0, 0.6) 100%
+      );
+      z-index: 1;
+    }
+
+    /* Glassmorphism bottom bar */
     .bottom-bar {
       position: fixed;
       bottom: 0; left: 0;
       width: 100%;
       height: 60px;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(255 255 255 / 0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       display: flex;
       justify-content: center;
       align-items: center;
       padding-bottom: env(safe-area-inset-bottom);
       z-index: 10;
     }
+
     button, a {
       font-family: 'Dancing Script', cursive;
       font-size: 1.8em;
@@ -49,42 +82,36 @@
       bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
-      transition: opacity 0.6s ease;
-      text-shadow: 0 0 4px rgba(0,0,0,0.7);
+      text-shadow: 0 0 6px rgba(0,0,0,0.6);
+      transition: color 0.3s ease, opacity 0.6s ease;
       -webkit-tap-highlight-color: transparent;
-      outline: none;
     }
+
     button:hover, button:focus,
     a:hover, a:focus {
       color: #ccc;
+      outline: none;
       text-decoration: none;
     }
-    button:focus,
-    button:active {
-      outline: none;
-      box-shadow: none;
-      background: transparent;
-    }
-    button:active {
-      transform: translateX(-50%) scale(0.95);
-    }
+
     #rsvpBtn {
-      opacity: 0;
-      pointer-events: none;
+      display: none;
       z-index: 9;
+      opacity: 0;
     }
-    #unmuteBtn {
+
+    #rsvpBtn.show {
+      display: inline;
       opacity: 1;
+    }
+
+    #unmuteBtn {
       z-index: 11;
     }
-    /* Show/hide with fade */
-    .hidden {
-      opacity: 0 !important;
-      pointer-events: none !important;
-    }
-    .visible {
-      opacity: 1 !important;
-      pointer-events: auto !important;
+
+    /* Remove black highlight box on click for mobile */
+    button, a {
+      -webkit-tap-highlight-color: transparent;
     }
   </style>
 </head>
@@ -95,9 +122,11 @@
     Your browser does not support the video tag.
   </video>
 
+  <div id="videoOverlay"></div>
+
   <div class="bottom-bar">
-    <button id="unmuteBtn" class="visible">Click here</button>
-    <a id="rsvpBtn" href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer" class="hidden">RSVP</a>
+    <button id="unmuteBtn">Click Here</button>
+    <a id="rsvpBtn" href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer">RSVP</a>
   </div>
 
   <script>
@@ -108,15 +137,13 @@
     unmuteBtn.addEventListener('click', () => {
       video.muted = false;
       video.play();
+      unmuteBtn.style.display = 'none';
 
-      unmuteBtn.classList.remove('visible');
-      unmuteBtn.classList.add('hidden');
-
-      rsvpBtn.classList.remove('hidden');
-      rsvpBtn.classList.add('visible');
+      // Show RSVP button with fade in
+      rsvpBtn.classList.add('show');
     });
 
-    // Autoplay fallback for mobile devices
+    // Attempt autoplay and fallback for mobile
     video.play().catch(() => {
       const playOnUserGesture = () => {
         video.play();
