@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wedding Invite</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
   <style>
     html, body {
       height: 100%;
@@ -12,7 +12,7 @@
       padding: 0;
       background: black;
       overflow: hidden;
-      font-family: Arial, sans-serif;
+      font-family: 'Great Vibes', cursive;
       color: white;
     }
     video {
@@ -29,7 +29,7 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 60px; /* height enough for button */
+      height: 60px;
       background: rgba(0, 0, 0, 0.6);
       display: flex;
       justify-content: center;
@@ -39,36 +39,42 @@
       z-index: 10;
     }
     button, a {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5em;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.8em;
       color: white;
       background: transparent;
       border: none;
       cursor: pointer;
-      text-decoration: underline;
       position: absolute;
       bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
       padding: 8px 20px;
       user-select: none;
+      text-shadow: 0 0 4px rgba(0,0,0,0.6);
     }
-    button:hover, button:focus,
+    button {
+      text-decoration: none;
+    }
+    a {
+      text-decoration: underline;
+    }
+    button:hover, button:focus {
+      color: #ccc;
+      outline: none;
+      text-decoration: none;
+    }
     a:hover, a:focus {
       color: #ccc;
       outline: none;
       text-decoration: none;
     }
     #rsvpBtn {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: none; /* hidden initially */
+      display: none;
       z-index: 9;
     }
     #unmuteBtn {
-      z-index: 11; /* on top */
+      z-index: 11;
     }
   </style>
 </head>
@@ -91,8 +97,8 @@
     unmuteBtn.addEventListener('click', () => {
       video.muted = false;
       video.play();
-      unmuteBtn.style.display = 'none'; // hide unmute button
-      rsvpBtn.style.display = 'inline';  // show RSVP button
+      unmuteBtn.style.display = 'none';
+      rsvpBtn.style.display = 'inline';
     });
   </script>
 </body>
