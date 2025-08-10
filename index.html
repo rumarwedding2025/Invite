@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wedding Invite</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
+  <!-- iOS status bar color -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <style>
     html, body {
       margin: 0;
@@ -37,8 +39,7 @@
     }
     button, a {
       font-family: 'Dancing Script', cursive;
-      font-size: 1.9em;
-      font-weight: 700; /* bold text */
+      font-size: 1.8em;
       color: white;
       background: transparent;
       border: none;
@@ -74,16 +75,14 @@
   </video>
 
   <div class="bottom-bar">
-    <button id="unmuteBtn">Click Here</button>
+    <button id="unmuteBtn">Click here</button>
     <a id="rsvpBtn" href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer">RSVP</a>
   </div>
 
   <script>
-    // Set video height on mobile to prevent cut-off
     function setVideoHeight() {
       const vh = window.innerHeight;
-      const video = document.getElementById('weddingVideo');
-      video.style.height = `${vh}px`;
+      document.getElementById('weddingVideo').style.height = `${vh}px`;
     }
     window.addEventListener('resize', setVideoHeight);
     window.addEventListener('orientationchange', setVideoHeight);
@@ -100,11 +99,8 @@
       rsvpBtn.style.display = 'inline';
     });
 
-    // Attempt to autoplay
-    video.play().then(() => {
-      console.log('Autoplay started!');
-    }).catch(() => {
-      console.log('Autoplay failed, waiting for user gesture...');
+    // Try autoplay, fallback to user gesture if blocked
+    video.play().catch(() => {
       const playOnUserGesture = () => {
         video.play();
         window.removeEventListener('touchstart', playOnUserGesture);
