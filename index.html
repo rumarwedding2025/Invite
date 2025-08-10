@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wedding Invite</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
-  <!-- iOS status bar color -->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <style>
     html, body {
       margin: 0;
@@ -51,6 +49,20 @@
       bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
+      opacity: 1;
+      transition: opacity 0.5s ease, transform 0.2s ease;
+    }
+    #rsvpBtn {
+      opacity: 0;
+      pointer-events: none;
+      z-index: 9;
+    }
+    #rsvpBtn.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #unmuteBtn {
+      z-index: 11;
     }
     button:hover, button:focus,
     a:hover, a:focus {
@@ -58,12 +70,9 @@
       outline: none;
       text-decoration: none;
     }
-    #rsvpBtn {
-      display: none;
-      z-index: 9;
-    }
-    #unmuteBtn {
-      z-index: 11;
+    /* Touch feedback */
+    button:active, a:active {
+      transform: translateX(-50%) scale(0.95);
     }
   </style>
 </head>
@@ -75,19 +84,11 @@
   </video>
 
   <div class="bottom-bar">
-    <button id="unmuteBtn">Click here</button>
+    <button id="unmuteBtn">Click Here</button>
     <a id="rsvpBtn" href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer">RSVP</a>
   </div>
 
   <script>
-    function setVideoHeight() {
-      const vh = window.innerHeight;
-      document.getElementById('weddingVideo').style.height = `${vh}px`;
-    }
-    window.addEventListener('resize', setVideoHeight);
-    window.addEventListener('orientationchange', setVideoHeight);
-    setVideoHeight();
-
     const video = document.getElementById('weddingVideo');
     const unmuteBtn = document.getElementById('unmuteBtn');
     const rsvpBtn = document.getElementById('rsvpBtn');
@@ -95,11 +96,18 @@
     unmuteBtn.addEventListener('click', () => {
       video.muted = false;
       video.play();
-      unmuteBtn.style.display = 'none';
-      rsvpBtn.style.display = 'inline';
+
+      // Fade out unmute button
+      unmuteBtn.style.opacity = '0';
+
+      // After fade out, hide unmute button and fade in RSVP button
+      setTimeout(() => {
+        unmuteBtn.style.display = 'none';
+        rsvpBtn.classList.add('visible');
+      }, 500);
     });
 
-    // Try autoplay, fallback to user gesture if blocked
+    // Autoplay fallback for mobile devices
     video.play().catch(() => {
       const playOnUserGesture = () => {
         video.play();
