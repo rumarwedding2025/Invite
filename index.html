@@ -15,9 +15,8 @@
       padding-bottom: env(safe-area-inset-bottom);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      text-align: center;
-      color: white;
       font-family: Arial, sans-serif;
+      color: white;
     }
 
     video {
@@ -31,62 +30,47 @@
       z-index: 0;
     }
 
-    .overlay {
+    /* Bottom bar container */
+    .bottom-bar {
       position: fixed;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 1;
-      pointer-events: none;
-      background: rgba(0,0,0,0.3);
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6); /* semi-transparent black */
+      padding: 15px 0;
+      text-align: center;
+      z-index: 10;
+      box-sizing: border-box;
+      padding-bottom: calc(env(safe-area-inset-bottom) + 15px); /* respect iPhone home bar */
     }
 
-    .overlay-content {
-      pointer-events: auto;
-    }
-
-    h1 {
-      margin: 0 0 1rem 0;
-      font-family: Georgia, serif;
-      font-size: 2em;
-    }
-
-    .rsvp-button {
-      background: transparent;
+    .bottom-bar a {
       color: white;
-      border: none;
       font-size: 1.2em;
       text-decoration: underline;
       cursor: pointer;
-      padding: 0;
-      outline: none;
-      box-shadow: none;
     }
 
-    .rsvp-button:hover,
-    .rsvp-button:focus {
+    .bottom-bar a:hover,
+    .bottom-bar a:focus {
       color: #ccc;
       outline: none;
-      box-shadow: none;
     }
 
   </style>
 </head>
 <body>
+
   <video autoplay muted playsinline loop preload="auto">
     <source src="wedding_v2.mp4?v=3" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
 
-  <div class="overlay">
-    <div class="overlay-content">
-      <h1>Maryam &amp; Rushan<br>November 28, 2025</h1>
-      <a href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer" class="rsvp-button">
-        RSVP Now
-      </a>
-    </div>
+  <div class="bottom-bar">
+    <a href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer">
+      RSVP Now
+    </a>
   </div>
+
 </body>
 </html>
