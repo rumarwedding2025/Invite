@@ -49,14 +49,14 @@
       bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
-      transition: color 0.3s ease, transform 0.1s ease;
+      transition: opacity 0.6s ease;
       text-shadow: 0 0 4px rgba(0,0,0,0.7);
-      -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
     }
     button:hover, button:focus,
     a:hover, a:focus {
       color: #ccc;
-      outline: none;
       text-decoration: none;
     }
     button:focus,
@@ -65,16 +65,26 @@
       box-shadow: none;
       background: transparent;
     }
+    button:active {
+      transform: translateX(-50%) scale(0.95);
+    }
     #rsvpBtn {
-      display: none;
+      opacity: 0;
+      pointer-events: none;
       z-index: 9;
     }
     #unmuteBtn {
+      opacity: 1;
       z-index: 11;
     }
-    /* Touch feedback */
-    button:active {
-      transform: translateX(-50%) scale(0.95);
+    /* Show/hide with fade */
+    .hidden {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+    .visible {
+      opacity: 1 !important;
+      pointer-events: auto !important;
     }
   </style>
 </head>
@@ -86,8 +96,8 @@
   </video>
 
   <div class="bottom-bar">
-    <button id="unmuteBtn">Click here</button>
-    <a id="rsvpBtn" href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer">RSVP</a>
+    <button id="unmuteBtn" class="visible">Click here</button>
+    <a id="rsvpBtn" href="https://your-rsvp-link.com" target="_blank" rel="noopener noreferrer" class="hidden">RSVP</a>
   </div>
 
   <script>
@@ -98,8 +108,12 @@
     unmuteBtn.addEventListener('click', () => {
       video.muted = false;
       video.play();
-      unmuteBtn.style.display = 'none';
-      rsvpBtn.style.display = 'inline';
+
+      unmuteBtn.classList.remove('visible');
+      unmuteBtn.classList.add('hidden');
+
+      rsvpBtn.classList.remove('hidden');
+      rsvpBtn.classList.add('visible');
     });
 
     // Autoplay fallback for mobile devices
