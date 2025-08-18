@@ -132,6 +132,19 @@
       rsvpBtn.classList.add('show');
     });
 
+    rsvpBtn.addEventListener('click', (e) => {
+  e.preventDefault(); // prevent immediate navigation
+  const link = rsvpBtn.href;
+
+  // Keep button visible, maybe add a subtle fade-out
+  rsvpBtn.style.opacity = '0.7';
+
+  // Navigate after a short delay (like 200ms)
+  setTimeout(() => {
+    window.location.href = link;
+  }, 200);
+});
+
     // Autoplay fallback
     video.play().catch(() => {
       const playOnUserGesture = () => {
