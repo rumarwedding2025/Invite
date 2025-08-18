@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Wedding Invite</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
-  <!-- Set status bar color for iOS -->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <style>
+    /* Fade-in animation */
     body {
       opacity: 0;
       animation: fadeInPage 1.8s ease-in-out forwards;
@@ -20,31 +21,33 @@
       height: 100%;
       position: relative;
     }
-    @keyframes fadeInPage {
-      to { opacity: 1; }
-    }
+    @keyframes fadeInPage { to { opacity: 1; } }
+
+    /* Video styling */
     video {
       width: 100vw;
       object-fit: cover;
       position: fixed;
       top: 0; left: 0;
       z-index: 0;
-      height: 100vh; /* dynamic height set in JS */
+      height: 100vh;
     }
+
+    /* Gradient overlay for readability */
     #videoOverlay {
       position: fixed;
       top: 0; left: 0;
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      background: linear-gradient(
-        to top,
+      background: linear-gradient(to top,
         rgba(0, 0, 0, 0.6) 10%,
         rgba(0, 0, 0, 0) 60%,
-        rgba(0, 0, 0, 0.6) 100%
-      );
+        rgba(0, 0, 0, 0.6) 100%);
       z-index: 1;
     }
+
+    /* Bottom bar */
     .bottom-bar {
       position: fixed;
       bottom: 0; left: 0;
@@ -57,6 +60,8 @@
       padding-bottom: env(safe-area-inset-bottom);
       z-index: 10;
     }
+
+    /* Buttons */
     button, a {
       font-family: 'Dancing Script', cursive;
       font-size: 1.8em;
@@ -72,34 +77,40 @@
       left: 50%;
       transform: translateX(-50%);
       text-shadow: 0 0 6px rgba(0,0,0,0.6);
-      transition: color 0.3s ease, opacity 0.6s ease;
+      transition: color 0.3s ease, opacity 0.6s ease, transform 0.2s ease;
       -webkit-tap-highlight-color: transparent;
     }
+
+    button:active, a:active {
+      transform: translateX(-50%) scale(0.95);
+    }
+
     button:hover, button:focus,
     a:hover, a:focus {
       color: #ccc;
       outline: none;
       text-decoration: none;
     }
+
     #rsvpBtn {
       display: none;
-      z-index: 9;
       opacity: 0;
+      z-index: 9;
     }
     #rsvpBtn.show {
       display: inline;
       opacity: 1;
     }
+
     #unmuteBtn {
       z-index: 11;
     }
-    button, a { -webkit-tap-highlight-color: transparent; }
   </style>
 </head>
 <body>
 
-  <video poster="poster.jpg" autoplay muted playsinline loop preload="metadata" id="weddingVideo">
-    <source src="wedding_v2.mp4?v=3" type="video/mp4" />
+  <video autoplay muted playsinline loop preload="auto" id="weddingVideo">
+    <source src="wedding_v2.mp4?v=5" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
 
@@ -107,7 +118,7 @@
 
   <div class="bottom-bar">
     <button id="unmuteBtn">Click Here</button>
-    <a id="rsvpBtn" href="https://withjoy.com/maryam-and-rushan/rsvp" target="_blank" rel="noopener noreferrer">RSVP</a>
+    <a id="rsvpBtn" href="https://withjoy.com/maryam-and-rushan/rsvp" target="_blank">RSVP</a>
   </div>
 
   <script>
@@ -115,6 +126,7 @@
     const unmuteBtn = document.getElementById('unmuteBtn');
     const rsvpBtn = document.getElementById('rsvpBtn');
 
+    // Set correct video height for mobile Safari including toolbars
     function setVideoHeight() {
       video.style.height = window.innerHeight + 'px';
     }
@@ -122,6 +134,7 @@
     window.addEventListener('orientationchange', setVideoHeight);
     setVideoHeight();
 
+    // Unmute button
     unmuteBtn.addEventListener('click', () => {
       video.muted = false;
       video.play();
@@ -129,16 +142,17 @@
       rsvpBtn.classList.add('show');
     });
 
-    // Short delay before navigating to RSVP to prevent music overlap
+    // Smooth RSVP navigation
     rsvpBtn.addEventListener('click', (e) => {
       e.preventDefault();
       const link = rsvpBtn.href;
       rsvpBtn.style.opacity = '0.7';
-      video.pause();
-      setTimeout(() => { window.location.href = link; }, 200);
+      setTimeout(() => {
+        window.location.href = link;
+      }, 200);
     });
 
-    // Autoplay fallback for mobile
+    // Autoplay fallback
     video.play().catch(() => {
       const playOnUserGesture = () => {
         video.play();
