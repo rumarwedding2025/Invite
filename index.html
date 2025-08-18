@@ -4,7 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wedding Invite</title>
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
+
+  <!-- Status bar color for mobile -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000000CC">
+
   <style>
     body {
       opacity: 0;
@@ -18,19 +25,20 @@
       height: 100%;
       position: relative;
     }
+
     @keyframes fadeInPage {
-      to {
-        opacity: 1;
-      }
+      to { opacity: 1; }
     }
+
     video {
       width: 100vw;
       object-fit: cover;
       position: fixed;
       top: 0; left: 0;
       z-index: 0;
-      /* height will be set dynamically in JS */
     }
+
+    /* Gradient overlay to help text pop */
     #videoOverlay {
       position: fixed;
       top: 0; left: 0;
@@ -45,6 +53,7 @@
       );
       z-index: 1;
     }
+
     .bottom-bar {
       position: fixed;
       bottom: 0; left: 0;
@@ -57,6 +66,7 @@
       padding-bottom: env(safe-area-inset-bottom);
       z-index: 10;
     }
+
     button, a {
       font-family: 'Dancing Script', cursive;
       font-size: 1.8em;
@@ -72,29 +82,34 @@
       left: 50%;
       transform: translateX(-50%);
       text-shadow: 0 0 6px rgba(0,0,0,0.6);
-      transition: color 0.3s ease, opacity 0.6s ease;
+      transition: color 0.3s ease, opacity 0.6s ease, transform 0.15s ease;
       -webkit-tap-highlight-color: transparent;
     }
+
+    button:active, a:active {
+      transform: translateX(-50%) scale(0.97);
+    }
+
     button:hover, button:focus,
     a:hover, a:focus {
       color: #ccc;
       outline: none;
       text-decoration: none;
     }
+
     #rsvpBtn {
       display: none;
       z-index: 9;
       opacity: 0;
     }
+
     #rsvpBtn.show {
       display: inline;
       opacity: 1;
     }
+
     #unmuteBtn {
       z-index: 11;
-    }
-    button, a {
-      -webkit-tap-highlight-color: transparent;
     }
   </style>
 </head>
@@ -109,7 +124,7 @@
 
   <div class="bottom-bar">
     <button id="unmuteBtn">Click Here</button>
-    <a id="rsvpBtn" href="https://withjoy.com/maryam-and-rushan/rsvp">RSVP</a>
+    <a id="rsvpBtn" href="https://withjoy.com/maryam-and-rushan/rsvp" >RSVP</a>
   </div>
 
   <script>
@@ -117,14 +132,15 @@
     const unmuteBtn = document.getElementById('unmuteBtn');
     const rsvpBtn = document.getElementById('rsvpBtn');
 
+    // Fit video to mobile viewport including Safari toolbar
     function setVideoHeight() {
-      // Use window.innerHeight for real visible height on mobile Safari including toolbars
       video.style.height = window.innerHeight + 'px';
     }
     window.addEventListener('resize', setVideoHeight);
     window.addEventListener('orientationchange', setVideoHeight);
     setVideoHeight();
 
+    // Unmute button
     unmuteBtn.addEventListener('click', () => {
       video.muted = false;
       video.play();
@@ -132,20 +148,20 @@
       rsvpBtn.classList.add('show');
     });
 
+    // RSVP button click delay so music stops naturally
     rsvpBtn.addEventListener('click', (e) => {
-  e.preventDefault(); // prevent immediate navigation
-  const link = rsvpBtn.href;
+      e.preventDefault();
+      const link = rsvpBtn.href;
 
-  // Keep button visible, maybe add a subtle fade-out
-  rsvpBtn.style.opacity = '0.7';
+      // subtle feedback
+      rsvpBtn.style.opacity = '0.7';
 
-  // Navigate after a short delay (like 200ms)
-  setTimeout(() => {
-    window.location.href = link;
-  }, 200);
-});
+      setTimeout(() => {
+        window.location.href = link;
+      }, 200);
+    });
 
-    // Autoplay fallback
+    // Autoplay fallback for mobile
     video.play().catch(() => {
       const playOnUserGesture = () => {
         video.play();
